@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sassy Temperatures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .temperature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .temperature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .temperature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .temp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .temp-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .temp-conversion {
+            font-size: 1.5em;
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .sassy-description {
+            font-size: 1.1em;
+            color: #333;
+            line-height: 1.6;
+            font-style: italic;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .temp-indicator {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .temp-value {
+                font-size: 2em;
+            }
+
+            .temp-conversion {
+                font-size: 1.2em;
+            }
+
+            .temp-indicator {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌡️ Sassy Temperatures</h1>
+            <p>Because numbers need personality too</p>
+        </div>
+
+        <div id="temperature-list"></div>
+
+        <div class="footer">
+            <p>Scroll to explore temperatures from -42°F to 242°F</p>
+        </div>
+    </div>
+
+    <script>
+        // Temperature data with sassy descriptions
+        function getSassyDescription(fahrenheit) {
+            const celsius = ((fahrenheit - 32) * 5) / 9;
+            
+            if (fahrenheit <= -30) {
+                return "Literally colder than Antarctica's summer. Your nose hairs will freeze mid-breath. Stay inside and reconsider your life choices.";
+            } else if (fahrenheit <= -10) {
+                return "The kind of cold that makes you question why humans live anywhere but the tropics. Even polar bears would complain.";
+            } else if (fahrenheit <= 0) {
+                return "Water is contemplating its solid state. So should you. Maybe under three blankets.";
+            } else if (fahrenheit <= 20) {
+                return "Cold enough to see your breath, but warm enough to pretend you're a dragon. Embrace it.";
+            } else if (fahrenheit <= 32) {
+                return "Freezing point! Water's identity crisis begins here. Ice skating weather if you're feeling fancy.";
+            } else if (fahrenheit <= 45) {
+                return "Jacket weather for the sensible, shorts weather for the defiantly optimistic college students.";
+            } else if (fahrenheit <= 55) {
+                return "Crisp and refreshing, like a cold apple. Perfect for a brisk walk and contemplating life's mysteries.";
+            } else if (fahrenheit <= 65) {
+                return "Goldilocks zone right here. Not too hot, not too cold. The perfect excuse to open all your windows.";
+            } else if (fahrenheit <= 75) {
+                return "Chef's kiss of temperatures. Room temperature but make it outdoors. Peak comfort achieved.";
+            } else if (fahrenheit <= 85) {
+                return "Warm enough to enjoy, cool enough to function. Sun's out, fun's out. Don't forget your sunscreen, you beautiful fool.";
+            } else if (fahrenheit <= 95) {
+                return "Getting spicy now! The AC becomes your best friend. Hydrate or suffer the consequences.";
+            } else if (fahrenheit <= 105) {
+                return "Hot enough to fry an egg on the sidewalk (but please don't waste food like that). Stay in the shade or melt.";
+            } else if (fahrenheit <= 120) {
+                return "Surface-of-the-sun vibes. Even your sweat is sweating. This is too hot for normal humans.";
+            } else if (fahrenheit <= 150) {
+                return "Danger zone! This is where water starts getting nervous about evaporating. You definitely should not be here.";
+            } else if (fahrenheit <= 200) {
+                return "Congratulations, you've entered cooking temperatures. Medium-rare territory. Please evacuate immediately.";
+            } else {
+                return "At this point, you're basically in an oven. Water is definitely boiling. Are you okay? You're probably not okay.";
+            }
+        }
+
+        function getTemperatureColor(fahrenheit) {
+            if (fahrenheit <= 0) return '#4a90e2';      // Deep blue
+            if (fahrenheit <= 32) return '#64b5f6';     // Light blue
+            if (fahrenheit <= 50) return '#81c784';     // Light green
+            if (fahrenheit <= 70) return '#aed581';     // Yellow-green
+            if (fahrenheit <= 85) return '#ffd54f';     // Yellow
+            if (fahrenheit <= 100) return '#ffb74d';    // Orange
+            if (fahrenheit <= 120) return '#ff8a65';    // Light red
+            return '#e57373';                            // Red
+        }
+
+        function getTemperatureEmoji(fahrenheit) {
+            if (fahrenheit <= 0) return '🥶';
+            if (fahrenheit <= 32) return '❄️';
+            if (fahrenheit <= 50) return '🧊';
+            if (fahrenheit <= 70) return '😊';
+            if (fahrenheit <= 85) return '☀️';
+            if (fahrenheit <= 100) return '🌡️';
+            if (fahrenheit <= 120) return '🔥';
+            return '🌋';
+        }
+
+        function fahrenheitToCelsius(fahrenheit) {
+            return ((fahrenheit - 32) * 5) / 9;
+        }
+
+        function createTemperatureCard(fahrenheit) {
+            const celsius = fahrenheitToCelsius(fahrenheit);
+            const card = document.createElement('div');
+            card.className = 'temperature-card';
+            
+            const indicator = document.createElement('div');
+            indicator.className = 'temp-indicator';
+            indicator.style.backgroundColor = getTemperatureColor(fahrenheit);
+            indicator.textContent = getTemperatureEmoji(fahrenheit);
+            
+            const header = document.createElement('div');
+            header.className = 'temp-header';
+            
+            const tempValue = document.createElement('div');
+            tempValue.className = 'temp-value';
+            tempValue.textContent = `${fahrenheit}°F`;
+            
+            const tempConversion = document.createElement('div');
+            tempConversion.className = 'temp-conversion';
+            tempConversion.textContent = `${celsius.toFixed(1)}°C`;
+            
+            header.appendChild(tempValue);
+            header.appendChild(tempConversion);
+            
+            const description = document.createElement('div');
+            description.className = 'sassy-description';
+            description.textContent = getSassyDescription(fahrenheit);
+            
+            card.appendChild(indicator);
+            card.appendChild(header);
+            card.appendChild(description);
+            
+            return card;
+        }
+
+        // Generate temperature cards from -42°F to 242°F
+        function generateTemperatures() {
+            const container = document.getElementById('temperature-list');
+            
+            // Generate temperatures at meaningful intervals
+            const temperatures = [];
+            
+            // Start with -42°F and go up to 242°F with strategic intervals
+            for (let temp = -42; temp <= 242; temp += 10) {
+                temperatures.push(temp);
+            }
+            
+            // Add some special temperatures
+            const specialTemps = [0, 32, 98.6, 212]; // Absolute zero proxy, freezing, body temp, boiling
+            specialTemps.forEach(temp => {
+                if (temp >= -42 && temp <= 242 && !temperatures.includes(temp)) {
+                    temperatures.push(temp);
+                }
+            });
+            
+            // Sort temperatures
+            temperatures.sort((a, b) => a - b);
+            
+            // Create cards for each temperature
+            temperatures.forEach(temp => {
+                container.appendChild(createTemperatureCard(temp));
+            });
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', generateTemperatures);
+    </script>
+</body>
+</html>
