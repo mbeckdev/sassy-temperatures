@@ -36,7 +36,7 @@ export const getSassyDescription = (fahrenheit: number): string => {
   } else if (fahrenheit <= 43) {
     return "Actually nice in the sun with a sweater - finally, some decent weather!";
   } else if (fahrenheit <= 44) {
-    return "Walking a block with hair up, now your nose is running. Thanks, nature.";
+    return "Walk a block with your hair up, and now your nose is running. Thanks, nature.";
   } else if (fahrenheit <= 45) {
     return "Jacket required, but you'll spend half the day debating if you really need it";
   } else if (fahrenheit <= 50) {
