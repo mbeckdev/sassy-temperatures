@@ -41,16 +41,16 @@ export default function TemperatureTable() {
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+            <thead className="bg-gradient-to-r from-blue-500 to-green-600 text-white">
               <tr>
                 <th className="pl-2 pr-2 py-4 text-center font-semibold">
-                  Temperature (°F)
+                  Temp (°F)
                 </th>
                 <th className="px-2 py-4 text-center font-semibold">
                   Sassy Description
                 </th>
                 <th className="pl-2 pr-2 py-4 text-center font-semibold">
-                  Temperature (°C)
+                  Temp (°C)
                 </th>
               </tr>
             </thead>
